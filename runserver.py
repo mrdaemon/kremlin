@@ -13,4 +13,10 @@
 
 from kremlin import app
 
-app.run(debug=True)
+def main():
+    print "Launching kremlin in development mode."
+    print "--------------------------------------"
+    app.run(debug=True)
+
+if __name__ == '__main__':
+    main()
