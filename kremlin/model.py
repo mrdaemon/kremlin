@@ -61,8 +61,8 @@ class Posts(db.Model):
 
 class Images(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.String(50)
-    sha1sum = db.String(40) # 40 bytes - lenght of a SHA1 hexadecimal digest
+    name = db.Column(db.String(50))
+    sha1sum = db.Column(db.String(40), unique=True) # 40 bytes SHA1
 
     def __init__(self, name, filedata):
         self.name = name
