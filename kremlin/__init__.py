@@ -18,3 +18,5 @@ app = Flask(__name__)
 
 # Import relevant modules
 import kremlin.model
+import kremlin.controller
+
