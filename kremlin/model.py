@@ -10,6 +10,7 @@
                Glasnost Image Board and Boredom Inhibitor
 
 """
+from __future__ import with_statement # python <2.7 support
 from datetime import datetime
 import hashlib
 
@@ -74,4 +75,28 @@ class Images(db.Model):
     def __repr__(self):
         return '<Image with checksum %r>' % self.sha1sum
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    pub_date = db.Column(db.DateTime)
 
+    # Foreign key relationship for users
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('Users',
+        backref=db.backref('users', lazy='dynamic'))
+
+    # Foreign key for parent post
+    parent_post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    parent_post = db.relationship('Posts',
+        backref=db.backref('posts', lazy='dynamic'))
+
+    def __init__(self, user, parent_post, body, pub_date=None):
+        self.user = user
+        self.parent_post = parent_post
+        self.body = body
+        if pub_date is None:
+            pub_date = datetime.utcnow()
+        self.pub_date = pub_date
+
+    def __repr__(self):
+        return '<Comment by %r>' % self.user
