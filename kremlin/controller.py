@@ -21,6 +21,11 @@ def entries_index():
     """ Show an index of image thumbnails """
     return "Image index."
 
+@app.route('/post/<int:post_id>')
+def post_id(post_id):
+    """ Show post identified by post_id """
+    return "Post view: %s" % (post_id)
+
 @app.route('/add', methods=['POST'])
 def add_image():
     """ Add a new image """
@@ -41,5 +46,9 @@ def logout():
     session.pop('logged_in', None)
     flash('Logged out of Kremlin.')
     return "You have been logged out."
+
+@app.route('/about')
+def about():
+    return "Kremlin Everything System and Boredom Inhibitor v 0.0.0-None"
 
 
