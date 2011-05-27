@@ -10,8 +10,7 @@
 
 """
 
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-        render_template, flash
+from flask import request, session, render_template, flash
 
 from kremlin import app
 
