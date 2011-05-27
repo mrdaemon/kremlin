@@ -1,0 +1,274 @@
+/**
+ * Knifa's tasty, slighty ancient styled CSS
+ * Don't look at me, I just concatenated it all together
+ * in a single file using 'cat', and fixed url links.
+ * I swear.
+ *   -Dee
+ */
+
+
+/* Remove underlines from links */
+a {
+	text-decoration: none;
+	color: #BA4747;
+}
+	
+/* Show an underline on links on mouse over */
+a:hover {
+	text-decoration: underline;
+}
+
+/* Stop images from having borders while linked */
+a img {
+	border: 0px;
+}
+
+/* Image Stuff */
+img {
+	/* Mostly just changes the alt text. */
+	color: #BA4747;
+	font-size: 8pt;
+}
+
+h2 {
+	margin: 0px;
+}
+body {
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+		
+	margin: 4px;
+}
+	
+/* Containter Divions because block elements are retarded. */
+div#Container {		
+	width: 770px; /* 2 pixels more than 768 to count for the border. */
+		
+	margin-left: auto;
+	margin-right: auto;
+}
+	
+/* Default Divison Settings */
+div#Header, div#Menu, div#Content, div#Ad, div#Footer {
+	font-family: tahoma, sans-serif, sans;
+	font-size: 8pt;
+	color: #BA4747;
+		
+	background: #262626;
+	background-image: url( "divBg.png" );
+		
+	padding: 4px;
+	margin: 2px 0px;
+	border: solid 1px #BA4747;
+	
+	width: 760px;	
+	float: left;
+}
+
+/* Header Division */
+div#Header {
+	text-align: center;
+	
+	margin-top: 0px;
+	
+	width: 768px;
+	height: 96px;
+	padding: 0px;
+}
+
+/* Menu Division */
+div#Menu {
+	text-align: center;
+	font-size: 8pt;
+}
+
+/* Content Division */
+div#Content {
+	text-align: left;
+	color: #C8C8C8;
+}
+
+div#Ad {
+	text-align: center;
+}
+
+/* Footer Divison */
+div#Footer {
+	text-align: center;
+	font-size: 8pt;
+}/* Form Input */
+input,textarea {
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+	
+	font-family: tahoma, sans-serif, sans;
+	font-size: 8pt;
+	color: #C8C8C8;
+	
+	margin: 2px;
+	border: solid 1px #BA4747;
+}
+
+/* Labels to align the forms. */
+label {
+	color: #C8C8C8;
+	width: 128px;
+	
+	float: left;
+}
+
+/* Center the form. Probably not done properly but it seems fine. */
+form {
+	margin: 0px;
+	margin-left: 256px;
+
+}
+/* Aligns everything inside it to the center. */
+div.AlignCenter {
+	text-align: center;
+}
+
+/* Error divamagig. */
+div.Error {
+	text-align: left;
+	font-size: 8pt;
+}
+
+div.Error h1 {
+	font-size: 8pt;
+	
+	margin: 0px;
+}/* Link for user pages */
+a.User {
+	font-weight: bold;
+	color: #BA4747;
+}/* Container that holds all of the images */
+div#ImageboardContainer {
+	margin-left: 35px;
+	float: left;
+}
+
+/* An imagey section thumb thing */
+div.ImageboardThumb {
+	float: left;
+		
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+	
+	width: 128px;
+	height: 142px;
+	
+	padding: 2px;
+	margin: 2px;
+	
+	border: solid 1px #BA4747;
+	
+	color: #BA4747;
+}
+
+div.ImageboardThumb div {
+	text-align: center;
+	height: 130px;
+}
+
+div.ImageboardThumb div.CommentCount {
+	height: auto;
+	text-align: right;
+	float: right;
+	margin: 0px;
+	padding: 0px;
+}
+
+div#ImageboardPageTop,div#ImageboardPageBottom {
+	color: #BA4747;
+	text-align: center;
+	
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+	
+	padding: 2px;
+	margin: 2px;
+	
+	border: solid 1px #BA4747;
+	
+	width: 680px;
+	
+	margin-left: 37px;
+
+	float: left;
+}
+
+div#ImageboardPageBottom {
+	margin-bottom: 0px;
+}
+
+div.ImageboardComment {
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+	
+	padding: 2px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	
+	border: solid 1px #BA4747;
+}
+
+div.ImageboardComment h1 {
+	color: #BA4747;
+	
+	font-weight: normal;
+		
+	font-size: 8pt;
+	margin: 0px;
+}
+
+div.ImageboardComment h2 {
+	font-size: 8pt;
+	margin: 0px;
+	
+	font-weight: normal;
+	
+	float: right;
+	color: #BA4747;
+}div.NewsPost {
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+	
+	padding: 2px;
+	margin-bottom: 4px;
+	
+	border: solid 1px #BA4747;
+}
+
+div.NewsPost h1 {
+	color: #BA4747;
+	
+	font-weight: normal;
+		
+	font-size: 10pt;
+	margin: 0px;
+}
+
+div.NewsPost h2 {
+	font-size: 8pt;
+	margin: 0px;
+	
+	font-weight: normal;
+	
+	float: right;
+	color: #BA4747;
+	
+	text-align: right;
+}
+
+div#NewsPageTop {
+	color: #BA4747;
+	text-align: center;
+	
+	background: #741111;
+	background-image: url( "bodyBg.png" );
+	
+	padding: 2px;
+	
+	border: solid 1px #BA4747;
+}

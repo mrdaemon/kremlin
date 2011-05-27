@@ -17,9 +17,14 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 from kremlin import app
 
 @app.route('/')
+def home_index():
+    """ Display the glasnost logo, attempt to replicate old behavior """
+    return render_template('home.html')
+
+@app.route('/images')
 def entries_index():
     """ Show an index of image thumbnails """
-    return "Image index."
+    return render_template('board.html')
 
 @app.route('/post/<int:post_id>')
 def post_id(post_id):
@@ -46,6 +51,10 @@ def logout():
     session.pop('logged_in', None)
     flash('Logged out of Kremlin.')
     return "You have been logged out."
+
+@app.route('/register')
+def register():
+    return "Unimplemented stub because fuck you, that's why."
 
 @app.route('/about')
 def about():

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Image Board{% endblock %}
+{% block content %}
+<form action="{{ url_for('add_image') }}" method=post enctype=multipart/form-data>
+    {% if not session.logged_in %}
+        <label for="name">Name</label>
+        <input type="text" name="name" value="Anonymous" id="name"><br />
+    {% endif %}
+    <label for="File">File</label>
+    <input type="file" name="file" id="file"><br />
+    <label for="note">Note:</label>
+    <textarea rows=2 cols=40 name="note" id="note"></textarea><br />
+    <label for="tags">tags (separated by space)</label>
+    <input type="text" name="tags" id="tags"><br />
+    <input type="submit" name="upload" value="Upload"><br />
+</form>
+{% endblock %}

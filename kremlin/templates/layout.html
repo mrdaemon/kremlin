@@ -1,0 +1,61 @@
+{#
+    Main glasnost layout template.
+
+    It was haphazardly pieced together to fit the stylesheets and layout of the
+    original KnifaCode powered PHP imageboard that should have never worked
+    in the first place.
+
+    Every other template inherits from this one, changing or extending blocks
+    as required. See the jinja2 and Flask documentation for details, it is
+    delicious I assure you.
+
+    TODO: implement a flash class that holds flashed messages.
+#}
+<!doctype html>
+<html>
+    <head>
+        {% block head %}
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='knibutt.css') }}">
+        <title>{% block title %}{% endblock %} - glasnost.us</title>
+        {% endblock %}
+    </head>
+    <body>
+        <div id="Container">
+            <div id="Loginbox">
+                {% if session.logged_in %}
+                    {# TODO: Display username. #}
+                    Welcome Back. <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a> | 
+                    <a href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </div>
+            <div id="Header">
+                {% block header %}
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="glasnost logo" />
+                {% endblock %}
+            </div>
+            <div id="Menu">
+                {% block menu %}
+                <a href="{{ url_for('home_index') }}">home</a> :: 
+                <a href="{{ url_for('entries_index') }}">Imageboard</a>
+                {% endblock %}
+            </div>
+            <div id="Content">
+                {% block content %}{% endblock %}
+            </div>
+            <div id="Footer">
+                {# 
+                    FIXME: Temporary contents because Knifa is a butt and
+                    this is actually the WORST place ever to put the login button.
+                    Seriously. I shall make it a copyright.
+                #}
+                {% block footer %}
+                Copyright &copy; glasnost.us 2004-2011<br /><br />
+                Made of Python, mod_penis, faggotry and longnecks.
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
