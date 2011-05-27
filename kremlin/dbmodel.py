@@ -84,6 +84,13 @@ class Image(db.Model):
     name = db.Column(db.String(50))
     sha1sum = db.Column(db.String(40), unique=True) # 40 bytes SHA1
 
+    # FIXME: Consider moving SHA hash computation to controller.
+    # It is really, really out of place here I just thought it was nice
+    # to autogenerate it like the date field, but then again, I'm not
+    # sure if this is just going to be the declarative ORM stuff, or  a
+    # full fledged MVC model. Whatever seems more pythonic to me later
+    # on. Also, passing the file data around seems awkward.
+
     def __init__(self, name, filedata):
         self.name = name
 
