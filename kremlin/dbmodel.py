@@ -59,7 +59,7 @@ class Post(db.Model):
     """ Declarative class for Posts database table """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
-    body = db.Column(db.Text)
+    note = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
 
     # Foreign key for image attached to post
@@ -68,10 +68,10 @@ class Post(db.Model):
     image = db.relationship('Image',
         backref=db.backref('images', lazy='dynamic'))
 
-    def __init__(self, image, title=None, body=None, pub_date=None):
+    def __init__(self, image, title=None, note=None, pub_date=None):
         self.image = image
         self.title = title
-        self.body = body
+        self.note = note
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
