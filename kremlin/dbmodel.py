@@ -13,14 +13,7 @@ from __future__ import with_statement # python <2.7 support
 from datetime import datetime
 import hashlib
 
-from flaskext.sqlalchemy import SQLAlchemy
-
-from kremlin import app
-
-# FIXME: temporary, for dev purposes. Move me to __init__.py
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////test.db'
-db = SQLAlchemy(app)
-
+from kremlin import db
 
 # Tags helper table
 # Since this is a many to many relationship, I'm using an actual table

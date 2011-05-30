@@ -12,7 +12,7 @@
 
 from flask import request, session, render_template, flash
 
-from kremlin import app
+from kremlin import app, forms
 
 @app.route('/')
 def home_index():
@@ -22,7 +22,7 @@ def home_index():
 @app.route('/images')
 def entries_index():
     """ Show an index of image thumbnails """
-    return render_template('board.html')
+    return render_template('board.html', form=forms.NewPostForm)
 
 @app.route('/post/<int:post_id>')
 def post_id(post_id):
