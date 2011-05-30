@@ -104,7 +104,7 @@ class Comment(db.Model):
         backref=db.backref('users', lazy='dynamic'))
 
     # Foreign key for parent post
-    parent_post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    parent_post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     parent_post = db.relationship('Post',
         backref=db.backref('posts', lazy='dynamic'))
 
