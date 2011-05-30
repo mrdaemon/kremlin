@@ -1,0 +1,100 @@
+#
+#              #   # ####  ##### #   # ##### #   # #   #
+#              #  #  #   # #     ## ##  #  # #  ## #   #
+#              ###   ####  ####  # # #  #  # # # # #####
+#              #  #  #     #     #   #  #  # ##  # #   #
+#              #   # #     ##### #   # #   # #   # #   #
+#
+#                  Kremlin Magical Everything System
+#              Glasnost Image Board and Boredom Inhibitor
+#
+# -------------------------------------------------------------------------
+#
+#   Kremlin Configuration File - Edit each section accordingly!
+#   You can point Kremlin to this configuration by declaring this
+#   environment variable:
+#
+#       KREMLIN_CONFIG_PATH=/path/to/configuration.yml
+#
+#   This will ensure the software can find its configuration.
+#   Otherise, the startup programs (runserver.py and friends) will look
+#   for a file in the current working directory named 'configuration.yml'
+#
+# -------------------------------------------------------------------------
+#
+
+## Configuration profile for production deployment
+## This section also documents possible values that can be set
+production:
+
+    ## Builtin Configuration Values
+
+    app_debug: false        # Enables debug mode. KEEP DISABLED IN PRODUCTION
+    app_testing: false      # Enables test mode. Keep disabled everywhere else.
+
+
+    ## The session key. 
+    ## You must generate a new one for every install
+    ## this can be done from python:
+    ## >> import os
+    ## >> os.urandom(24).encode('hex')
+    ## Copy the resulting string here. MAKE SURE IT IS UNIQUE, KEEP SECRET.
+    app_session_key: ""
+
+    ## Database Settings
+    ## Please enter your URI for the database backend in the following format:
+    ## 
+    ##   dialect+driver://username:password@host:port/database
+    ## 
+    ## Some examples:
+    ##  - postgresql://scott:tiger@localhost/kremlindb
+    ##  - mysql://scott:tiger@localhost/kremlindb
+    ##  - oracle://scott:tiger@127.0.0.1:1521/SIDname
+    ##  - sqlite:////absolute/path/to/file.db
+    ###########################################################################
+
+    db_uri: 'mysql://username:password@server/database'
+   
+    ## Advanced Database Settings
+    ## Default settings vary from database to database.
+
+    # db_pool_size: 10                # Controls the database pool size
+    # db_pool_timeout: 20             # Timeout value for database pool
+    # db_pool_recycle_delay: 14400    # Time in seconds before pool will be
+    #                                 #  recycled. MySQL kills conns. after
+    #                                 #  8 hours by default.
+    #
+    # db_no_native_unicode: True      # Explicitely disable native unicode
+    
+
+    ## Application Settings
+    ##
+    ## You MUST modify them for production! Review them carefully!
+    ##
+    ###########################################################################
+    
+    app_image_dir: '/var/www/host/img'  # location of the images folder
+                                        # If left unspecified, will serve
+                                        # images from the static directory,
+                                        # which is very inefficient.
+                                        #
+                                        # You should leave nginx to do the file
+                                        # serving, whenever possible.
+
+# Dev settings
+development:
+    app_debug: true
+    app_testing: false
+
+    # Change for production!
+    app_session_key: "636828286569fb7d0036cadf3a49afd959c6f69ab4fa68d6"
+    
+    db_uri: 'sqlite:////tmp/kremlin-dev.db'
+
+# Test settings
+test:
+    app_debug: true
+    app_testing: true
+    app_session_key: "testing-session-key"
+    db_uri: 'sqlite://' # in memory database
+
