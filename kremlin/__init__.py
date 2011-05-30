@@ -11,8 +11,14 @@
 """
 
 from flask import Flask
+from flaskext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+# Load default configuration values, override with whatever is specified
+# in configuration file. This is, I think, the sanest approach.
+app.config.from_object('kremlin.config_defaults')
+app.config.from_envvar('KREMLIN_CONFIGURATION')
 
 # Import relevant modules
 import kremlin.dbmodel

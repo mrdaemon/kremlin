@@ -13,8 +13,6 @@
 import os
 import sys
 
-from kremlin import app
-
 def usage():
     """ Display program usage """
     print """
@@ -49,13 +47,34 @@ def main():
             usage()
             sys.exit(1)
         else:
+            if os.environ.has_key('KREMLIN_CONFIGURATION'):
+                print "Warning! Overriding environment value for config file!"
+
             os.environ['KREMLIN_CONFIGURATION'] = sys.argv[1]
     else:
         usage()
         sys.exit(1)
 
+    # Quick sanity check to make sure the config file actually exists,
+    # abort noisily if it isn't the case. Anyone bugging me about how I
+    # should use open() and fail because the situation might lead to a
+    # ace condition should voice complaints to /dev/null, or submit a
+    # patch if it is that important to them.
+    if not os.path.isfile(os.environ['KREMLIN_CONFIGURATION']):
+        print "Critical: Specified configuration file %s doesn't exist!" %\
+                (os.environ['KREMLIN_CONFIGURATION'])
+        sys.exit(1)
+
+    print "INIT: Using configuration file %s" %\
+            (os.environ["KREMLIN_CONFIGURATION"])
+
     print "Connect to http://127.0.0.1:5000 to access."
-    app.run(debug=True)
+    print "Starting application..."
+
+    # Application is imported at this point because kremlin/__init__.py
+    # actually loads the configuration.
+    from kremlin import app
+    app.run()
 
 if __name__ == '__main__':
     main()
