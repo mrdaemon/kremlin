@@ -20,7 +20,7 @@ from flaskext.wtf import Form, TextField, TextAreaField, FileField, \
 images = UploadSet("images", IMAGES)
 
 class NewPostForm(Form):
-    name = TextField(u'Name', validators[validators.required()])
+    name = TextField(u'Name', validators=[validators.required()])
 
     upload = FileField("Image File",
         validators=[
@@ -29,7 +29,7 @@ class NewPostForm(Form):
             ]
         )
 
-    note = TextAreaField(u'Note/Comment', validators[validators.optional()])
+    note = TextAreaField(u'Note/Comment', validators=[validators.optional()])
 
     tags = TextField(u'Tags (separated by space)',
             validators=[validators.optional()]

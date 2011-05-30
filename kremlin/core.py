@@ -22,7 +22,7 @@ def home_index():
 @app.route('/images')
 def entries_index():
     """ Show an index of image thumbnails """
-    return render_template('board.html', form=forms.NewPostForm)
+    return render_template('board.html', form=forms.NewPostForm())
 
 @app.route('/post/<int:post_id>')
 def post_id(post_id):

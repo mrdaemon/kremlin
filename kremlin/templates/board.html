@@ -4,11 +4,11 @@
 <form action="{{ url_for('add_image') }}" method=post enctype=multipart/form-data>
     {{ form.csrf }}
     {% if not session.logged_in %}
-        {{ form.name.label }}{{ form.name(value="Anonymous") }}
+        {{ form.name.label }}{{ form.name(value="Anonymous") }}<br />
     {% endif %}
-    {{ form.upload.label }}{{ form.upload }}
-    {{ form.note.label }}{{ form.note }}
-    {{ form.tags.label }}{{ form.tags }}
+    {{ form.upload.label }}{{ form.upload }}<br/>
+    {{ form.note.label }}{{ form.note }}<br/>
+    {{ form.tags.label }}{{ form.tags }}<br/>
     <input type="submit" value="Upload"><br />
 </form>
 {% endblock %}
