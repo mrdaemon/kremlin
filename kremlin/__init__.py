@@ -20,6 +20,10 @@ app = Flask(__name__)
 app.config.from_object('kremlin.config_defaults')
 app.config.from_envvar('KREMLIN_CONFIGURATION')
 
+# Set database from configuration values
+app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
+db = SQLAlchemy(app)
+
 # Import relevant modules
 import kremlin.dbmodel
 import kremlin.core
