@@ -9,9 +9,10 @@
                Glasnost Image Board and Boredom Inhibitor
 
 """
-from __future__ import with_statement # python <2.7 support
+
 from datetime import datetime
-import hashlib
+
+import os
 
 from kremlin import db
 
@@ -37,7 +38,7 @@ class Tag(db.Model):
 class User(db.Model):
     """ Declarative class for Users database table """
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
+    name = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
 
     def __init__(self, username, email):
@@ -60,6 +61,10 @@ class Post(db.Model):
     image = db.relationship('Image',
         backref=db.backref('images', lazy='dynamic'))
 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User',
+        backref=db.backref('users', lazy='dynamic'))
+
     def __init__(self, image, title=None, note=None, pub_date=None):
         self.image = image
         self.title = title
@@ -74,24 +79,19 @@ class Post(db.Model):
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
+    filename = db.Column(db.String(50))
     sha1sum = db.Column(db.String(40), unique=True) # 40 bytes SHA1
 
-    # FIXME: Consider moving SHA hash computation to controller.
-    # It is really, really out of place here I just thought it was nice
-    # to autogenerate it like the date field, but then again, I'm not
-    # sure if this is just going to be the declarative ORM stuff, or  a
-    # full fledged MVC model. Whatever seems more pythonic to me later
-    # on. Also, passing the file data around seems awkward.
-
-    def __init__(self, name, filedata):
+    def __init__(self, name, sha1sum):
         self.name = name
+        self.sha1sum = sha1sum
 
-        h = hashlib.new('sha1')
-        h.update(filedata)
-        self.sha1sum = h.hexdigest()
+        fext = os.path.splitext(self.name)[1]
+        fnlist = [self.sha1sum, fext]
+        self.filename = ''.join(fnlist)
 
     def __repr__(self):
-        return '<Image with checksum %r>' % self.sha1sum
+        return '<Image %s with checksum %r>' % (self.name, self.sha1sum)
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
