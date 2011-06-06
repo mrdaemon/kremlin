@@ -21,7 +21,7 @@ USE_X_SENDFILE = False # Enable web server sendfile support
 
 LOGGER_NAME = "kremlin" # Main logger name
 
-SERVER_NAME = "localhost" # Default server name
+#SERVER_NAME = "localhost" # Default server name
 
 MAX_CONTENT_LENGTH = 32 * 1024 * 1024 # 32 Megabytes
 
