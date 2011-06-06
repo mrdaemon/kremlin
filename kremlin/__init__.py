@@ -24,6 +24,9 @@ app.config.from_envvar('KREMLIN_CONFIGURATION')
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
 db = SQLAlchemy(app)
 
+# Create all database tables
+db.create_all()
+
 # Import relevant modules
 import kremlin.dbmodel
 import kremlin.core
