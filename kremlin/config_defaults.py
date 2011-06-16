@@ -27,6 +27,6 @@ MAX_CONTENT_LENGTH = 32 * 1024 * 1024 # 32 Megabytes
 
 CSRF_ENABLED = True # WTForms Cross Site Request Forgery Prevention
 
-UPLOADED_FILES_DEST=""
+UPLOADED_IMAGES_DEST=""
 
 #UPLOAD_DEFAULT_URL="..."

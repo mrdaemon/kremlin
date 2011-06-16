@@ -112,8 +112,11 @@ class Comment(db.Model):
 
     # Foreign key relationship for users
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User',
-        backref=db.backref('users', lazy='dynamic'))
+
+    # Apparently, there is no need to declare the backref on both
+    # endpoints. Having it in Post is enough, apparently.
+    #user = db.relationship('User',
+    #    backref=db.backref('users', lazy='dynamic'))
 
     # Foreign key for parent post
     parent_post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
@@ -130,3 +133,4 @@ class Comment(db.Model):
 
     def __repr__(self):
         return '<Comment by %r>' % self.user
+

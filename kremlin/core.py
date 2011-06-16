@@ -14,7 +14,7 @@ import hashlib
 from flask import request, session, render_template, flash, url_for, redirect
 from werkzeug import secure_filename
 
-from kremlin import app, db, dbmodel, forms
+from kremlin import app, db, dbmodel, forms, uploaded_images
 
 @app.route('/')
 def home_index():
@@ -41,7 +41,7 @@ def add_image():
 
     if form.validate_on_submit():
         filename = secure_filename(form.upload.file.filename)
-        filedata = form.upload.stream.read()
+        filedata = form.upload.file.stream.read()
 
         h = hashlib.new('sha1')
         h.update(filedata)
@@ -55,10 +55,10 @@ def add_image():
             return redirect(url_for('entries_index'))
         else:
             # File is unique, proceed to create post and image.
-
             # Save file to filesystem
             try:
-                forms.images.save(form.upload.file)
+                uploaded_images.save(form.upload.file, )
+            #except (OSError, IOError):
             except IOError:
                 flash("Oh god a terrible error occured while saving %s" %
                     (filename))
@@ -86,7 +86,10 @@ def add_image():
                 db.session.commit()
                 flash("Image successfully posted!")
 
-        return redirect(url_for('index'))
+        return redirect(url_for('entries_index'))
+    else:
+        flash("Your form has terrible errors in it.")
+        return(redirect(url_for("entries_index")))
 
 
 
