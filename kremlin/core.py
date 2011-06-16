@@ -40,7 +40,7 @@ def add_image():
     form = forms.NewPostForm()
 
     if form.validate_on_submit():
-        filename = secure_filename(form.upload.filename)
+        filename = secure_filename(form.upload.file.filename)
         filedata = form.upload.stream.read()
 
         h = hashlib.new('sha1')
@@ -50,24 +50,43 @@ def add_image():
         # Validate file uniqueness
         dupe = dbmodel.Image.query.filter_by(sha1sum=filehash).first()
 
-        if dupe is not None:
+        if dupe:
             flash("Image already exists: %r" % (dupe))
             return redirect(url_for('entries_index'))
         else:
             # File is unique, proceed to create post and image.
-            dbimage = dbmodel.Image(filename, filehash)
-            db.session.add(dbimage)
 
-            user = ""
-
-            if "username" in session:
-                user = session['username']
+            # Save file to filesystem
+            try:
+                forms.images.save(form.upload.file)
+            except IOError:
+                flash("Oh god a terrible error occured while saving %s" %
+                    (filename))
             else:
-                user = form.name
+                dbimage = dbmodel.Image(filename, filehash)
+                db.session.add(dbimage)
 
-            note = form.note
-            tags =
+                user = None
 
+                if "uid" in session:
+                    user = dbmodel.User.query.filter_by(
+                            id=session['uid']
+                        ).first()
+
+                note = form.note
+
+                #TODO: Implement tags.
+
+                # Create a new post with the image
+                post = dbmodel.Post(image=dbimage, title=filename,\
+                        note=note, user=user)
+                db.session.add(post)
+
+                # Commit database transaction
+                db.session.commit()
+                flash("Image successfully posted!")
+
+        return redirect(url_for('index'))
 
 
 
