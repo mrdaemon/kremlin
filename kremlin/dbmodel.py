@@ -65,13 +65,25 @@ class Post(db.Model):
     user = db.relationship('User',
         backref=db.backref('users', lazy='dynamic'))
 
-    def __init__(self, image, title=None, note=None, pub_date=None):
+    def __init__(self, image, title=None, note=None,\
+            pub_date=None, user=None):
         self.image = image
         self.title = title
         self.note = note
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
+
+        if user is None:
+            # Bind post to Anonymous user
+            # TODO: Something should happen here if the 'anon' user
+            #       does not exist. It should be created by init, but
+            #       I would really like a saner way of doing this short
+            #       of ensuring static user IDs. Not sure how that
+            #       varies from database to database.
+            self.user = User.query.filter_by(name="anon").first()
+        else:
+            self.user = user
 
     def __repr__(self):
         return '<Post %r>' % self.title
