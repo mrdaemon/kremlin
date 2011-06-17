@@ -25,9 +25,7 @@ app.config.from_envvar('KREMLIN_CONFIGURATION')
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
 db = SQLAlchemy(app)
 
-
-# Create all database tables
-db.create_all()
+uploaded_images = UploadSet("images", IMAGES)
 
 # Create upload set
 # and configure like a motherfucker.
@@ -38,5 +36,7 @@ configure_uploads(app, uploaded_images)
 # this is done last to avoid touchy situations
 import kremlin.dbmodel
 import kremlin.core
-_bootstrap()
+import kremlin.forms
 
+# Create all database tables
+db.create_all()
