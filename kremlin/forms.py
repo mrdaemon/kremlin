@@ -22,7 +22,8 @@ class NewPostForm(Form):
 
     upload = FileField("Image File",
                         validators=[file_required(),
-                        file_allowed(uploaded_images, "Not an image :(")])
+                        file_allowed(uploaded_images,
+                            "Not an image :(")])
 
     note = TextAreaField(u'Note/Comment', validators=[validators.optional()])
 

@@ -26,14 +26,14 @@ def entries_index():
     """ Show an index of image thumbnails """
     return render_template('board.html', form=forms.NewPostForm())
 
-@app.route('/post/<int:post_id>')
+@app.route('/images/<int:post_id>')
 def view_post(post_id):
     """ Show post identified by post_id """
     post = dbmodel.Post.query.filter_by(id=post_id).get_or_404()
     # TODO: Write template for post views.
     return "Post view: %s" % (post)
 
-@app.route('/add/', methods=['POST'])
+@app.route('/images/add/', methods=['POST'])
 def add_image():
     """ Add a new image """
 
@@ -51,13 +51,15 @@ def add_image():
         dupe = dbmodel.Image.query.filter_by(sha1sum=filehash).first()
 
         if dupe:
-            flash("Image already exists: %r" % (dupe))
+            flash("Image already exists: %s" % (dupe))
             return redirect(url_for('entries_index'))
         else:
             # File is unique, proceed to create post and image.
             # Save file to filesystem
             try:
-                uploaded_images.save(form.upload.file)
+                uploaded_images.save(storage=form.upload.file,
+                                     name=''.join([filehash, '.']),
+                                    )
             #except (OSError, IOError):
             except IOError:
                 flash("Oh god a terrible error occured while saving %s" %
