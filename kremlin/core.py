@@ -57,7 +57,7 @@ def add_image():
             # File is unique, proceed to create post and image.
             # Save file to filesystem
             try:
-                uploaded_images.save(form.upload.file, )
+                uploaded_images.save(form.upload.file)
             #except (OSError, IOError):
             except IOError:
                 flash("Oh god a terrible error occured while saving %s" %
@@ -73,7 +73,7 @@ def add_image():
                             id=session['uid']
                         ).first()
 
-                note = form.note
+                note = form.note.data
 
                 #TODO: Implement tags.
 
