@@ -58,7 +58,7 @@ def main():
     # Quick sanity check to make sure the config file actually exists,
     # abort noisily if it isn't the case. Anyone bugging me about how I
     # should use open() and fail because the situation might lead to a
-    # ace condition should voice complaints to /dev/null, or submit a
+    # race condition should voice complaints to /dev/null, or submit a
     # patch if it is that important to them.
     if not os.path.isfile(os.environ['KREMLIN_CONFIGURATION']):
         print "Critical: Specified configuration file %s doesn't exist!" %\
