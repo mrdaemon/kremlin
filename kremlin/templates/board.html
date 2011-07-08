@@ -25,11 +25,16 @@
     <div class="ImageboardThumb">
         <div>
             <a href="{{ url_for('view_post', post_id=post.id) }}">
-                <img src="{{ url_for('thumbs', post.image.filename) }}" />
+                {# <img src="{{ url_for('thumbs', post.image.filename) }}" /> #}
             </a>
             <br />
         </div>
-        {{ post.user.name }}
+        {{ post.title }}
+        {% if not post.user.name %}
+            Anonymous
+        {% else %}
+            {{ post.user.name }}
+        {% endif %}
     </div>
     {% endfor %}
 </div>

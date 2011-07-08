@@ -24,7 +24,10 @@ def home_index():
 @app.route('/images')
 def entries_index():
     """ Show an index of image thumbnails """
-    return render_template('board.html', form=forms.NewPostForm())
+    #FIXME: limit with pagination
+    posts = dbmodel.Post.query.all()
+    return render_template('board.html', form=forms.NewPostForm(),
+        posts=posts)
 
 @app.route('/images/<int:post_id>')
 def view_post(post_id):
