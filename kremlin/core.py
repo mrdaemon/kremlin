@@ -9,12 +9,12 @@
                Glasnost Image Board and Boredom Inhibitor
 
 """
-import hashlib
+import hashlib, os
 
 from flask import request, session, render_template, flash, url_for, redirect
 from werkzeug import secure_filename
 
-from kremlin import app, db, dbmodel, forms, uploaded_images
+from kremlin import app, db, dbmodel, forms, imgutils, uploaded_images
 
 @app.route('/')
 def home_index():
@@ -44,6 +44,7 @@ def add_image():
 
     if form.validate_on_submit():
         filename = secure_filename(form.upload.file.filename)
+        fileext = os.path.splitext(filename)[1]
         filedata = form.upload.file.stream.read()
 
         h = hashlib.new('sha1')
@@ -59,15 +60,25 @@ def add_image():
         else:
             # File is unique, proceed to create post and image.
             # Save file to filesystem
+
+            # Rewind file
+            form.upload.file.seek(0)
+
+            # Proceed with storage
             try:
                 uploaded_images.save(storage=form.upload.file,
                                      name=''.join([filehash, '.']),
                                     )
-            #except (OSError, IOError):
+
             except IOError:
                 flash("Oh god a terrible error occured while saving %s" %
                     (filename))
             else:
+                # FIXME: generate thumbnail in a safer way.
+                # This is fairly horrible and I'm sorry.
+                imagepath = uploaded_images.path(''.join([filehash, fileext]))
+                imgutils.mkthumb(imagepath)
+
                 dbimage = dbmodel.Image(filename, filehash)
                 db.session.add(dbimage)
 

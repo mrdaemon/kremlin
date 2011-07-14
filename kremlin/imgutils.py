@@ -9,10 +9,16 @@
                Glasnost Image Board and Boredom Inhibitor
 
 """
+import os
 
 from PIL import Image
 
-def mkthumb(imgfile):
+def mkthumb(fp, h=128, w=128):
     """docstring for mkthumb"""
-    #TODO: Actually write this HERP DERP
-    # I am adding it here just so I remember to do so.
+
+    size = (h, w)
+    f, ext = os.path.splitext(fp)
+
+    im = Image.open(fp)
+    im.thumbnail(size, Image.ANTIALIAS)
+    im.save(f + ".thumbnail" + ext)
