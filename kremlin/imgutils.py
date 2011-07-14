@@ -21,4 +21,4 @@ def mkthumb(fp, h=128, w=128):
 
     im = Image.open(fp)
     im.thumbnail(size, Image.ANTIALIAS)
-    im.save(f + ".thumbnail" + ext)
+    im.save('.thumbnail'.join([f, ext]))
