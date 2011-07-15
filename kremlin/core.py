@@ -47,6 +47,7 @@ def add_image():
         fileext = os.path.splitext(filename)[1]
         filedata = form.upload.file.stream.read()
 
+        # Calculate SHA1 checksum
         h = hashlib.new('sha1')
         h.update(filedata)
         filehash = h.hexdigest()
@@ -61,7 +62,8 @@ def add_image():
             # File is unique, proceed to create post and image.
             # Save file to filesystem
 
-            # Rewind file
+            # Rewind file, it was read() by the SHA1 checksum
+            # routine
             form.upload.file.seek(0)
 
             # Proceed with storage
@@ -70,15 +72,14 @@ def add_image():
                                      name=''.join([filehash, '.']),
                                     )
 
-            except IOError:
-                flash("Oh god a terrible error occured while saving %s" %
-                    (filename))
-            else:
                 # FIXME: generate thumbnail in a safer way.
                 # This is fairly horrible and I'm sorry.
                 imagepath = uploaded_images.path(''.join([filehash, fileext]))
                 imgutils.mkthumb(imagepath)
-
+            except IOError:
+                flash("Oh god a terrible error occured while saving %s" %
+                    (filename))
+            else:
                 dbimage = dbmodel.Image(filename, filehash)
                 db.session.add(dbimage)
 
@@ -111,7 +112,6 @@ def add_image():
 @app.route('/login', methods=['GET','POST'])
 def login():
     """ Login to imageboard """
-    error = None
     if request.method == 'POST':
         #TODO: Validate username
         pass
