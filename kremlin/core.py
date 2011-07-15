@@ -108,9 +108,6 @@ def add_image():
         return(redirect(url_for("entries_index")))
 
 
-
-
-
 @app.route('/login', methods=['GET','POST'])
 def login():
     """ Login to imageboard """
