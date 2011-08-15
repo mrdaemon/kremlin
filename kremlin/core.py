@@ -37,9 +37,9 @@ def entries_index():
 @app.route('/images/<int:post_id>')
 def view_post(post_id):
     """ Show post identified by post_id """
-    post = dbmodel.Post.query.filter_by(id=post_id).get_or_404()
+    post = dbmodel.Post.query.get_or_404(post_id)
     # TODO: Write template for post views.
-    return "Post view: %s" % (post)
+    return render_template('post.html', post=post)
 
 @app.route('/images/get/<filename>')
 def send_file(filename):
