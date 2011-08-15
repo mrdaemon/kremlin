@@ -11,10 +11,15 @@
 """
 import hashlib, os
 
-from flask import request, session, render_template, flash, url_for, redirect
+
+from flask import request, session, render_template, flash, url_for, \
+        redirect, send_from_directory
+
 from werkzeug import secure_filename
 
+
 from kremlin import app, db, dbmodel, forms, imgutils, uploaded_images
+
 
 @app.route('/')
 def home_index():
@@ -35,6 +40,12 @@ def view_post(post_id):
     post = dbmodel.Post.query.filter_by(id=post_id).get_or_404()
     # TODO: Write template for post views.
     return "Post view: %s" % (post)
+
+@app.route('/images/get/<filename>')
+def send_file(filename):
+    """Send image file to browser"""
+    return send_from_directory(app.config['UPLOADED_IMAGES_DEST'],
+        filename)
 
 @app.route('/images/add/', methods=['POST'])
 def add_image():

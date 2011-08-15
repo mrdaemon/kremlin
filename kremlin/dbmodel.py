@@ -76,11 +76,11 @@ class Post(db.Model):
 
         if user is None:
             # Bind post to Anonymous user
-            # TODO: Something should happen here if the 'anon' user
-            #       does not exist. It should be created by init, but
-            #       I would really like a saner way of doing this short
-            #       of ensuring static user IDs. Not sure how that
-            #       varies from database to database.
+            # FIXME: Something should happen here if the 'anon' user
+            #        does not exist. It should be created by init, but
+            #        I would really like a saner way of doing this short
+            #        of ensuring static user IDs. Not sure how that
+            #        varies from database to database.
             self.user = User.query.filter_by(name="anon").first()
         else:
             self.user = user
@@ -92,18 +92,23 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     filename = db.Column(db.String(50))
+    thumbfilename = db.Column(db.String(50));
     sha1sum = db.Column(db.String(40), unique=True) # 40 bytes SHA1
 
     def __init__(self, name, sha1sum):
         self.name = name
         self.sha1sum = sha1sum
 
+        # FIXME: Ugly, ugly, ugly
         fext = os.path.splitext(self.name)[1]
         fnlist = [self.sha1sum, fext]
+        tnlist = [self.sha1sum, '.thumbnail', fext]
         self.filename = ''.join(fnlist)
+        self.thumbfilename = ''.join(tnlist)
 
     def __repr__(self):
         return '<Image %s with checksum %r>' % (self.name, self.sha1sum)
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
