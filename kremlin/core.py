@@ -15,7 +15,8 @@ import hashlib, os
 from flask import request, session, render_template, flash, url_for, \
         redirect, send_from_directory
 
-from werkzeug import secure_filename
+from werkzeug import generate_password_hash, \
+        secure_filename
 
 
 from kremlin import app, db, dbmodel, forms, imgutils, uploaded_images
@@ -135,9 +136,23 @@ def logout():
     flash('Logged out of Kremlin.')
     return "You have been logged out."
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return "Unimplemented stub because fuck you, that's why."
+    form = forms.RegisterForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        dupe = dbmodel.User.query.filter_by(name=form.username.data).first()
+        if dupe:
+            flash("Username %s is already taken." % form.username.data)
+            return redirect(url_for('register'))
+        else:
+            user = dbmodel.User(form.username.data, form.email.data,
+                    generate_password_hash(form.password.data))
+            db.session.add(user)
+            db.session.commit()
+            flash("Registration complete! Please login.")
+            return redirect(url_for('login'))
+    else:
+        return render_template('register.html', form=form)
 
 @app.route('/about')
 def about():

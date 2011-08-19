@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{%block title %}Register{% endblock %}
+{%block content %}
+{% if not session.logged_in %}
+    <form action="{{ url_for('register') }}" method=post>
+        {{ form.csrf }}
+        {{ form.username.label }}{{ form.username }}<br />
+        {{ form.email.label }}{{ form.email }}<br />
+        {{ form.password.label }}{{ form.password }}<br />
+        {{ form.confirm.label }}{{ form.confirm }}<br />
+        <input type="submit" value="Register"><br />
+    </form>
+{% else %}
+    <div id="ImageBoardPageTop">
+        Hi {{ session.username }}. You are already registered.
+    </div>
+{% endif %}
+{% endblock %}
+
