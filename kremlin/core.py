@@ -22,6 +22,7 @@ from werkzeug import generate_password_hash, \
 from kremlin import app, db, dbmodel, forms, imgutils, uploaded_images
 
 
+
 @app.route('/')
 def home_index():
     """ Display the glasnost logo, attempt to replicate old behavior """
@@ -39,8 +40,8 @@ def entries_index():
 def view_post(post_id):
     """ Show post identified by post_id """
     post = dbmodel.Post.query.get_or_404(post_id)
-    # TODO: Write template for post views.
-    return render_template('post.html', post=post)
+    comments = dbmodel.Comment.query.filter_by(parent_post_id=post_id)
+    return render_template('post.html', post=post, comments=comments)
 
 @app.route('/images/get/<filename>')
 def send_file(filename):
