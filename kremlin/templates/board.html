@@ -11,11 +11,6 @@
     {{ form.tags.label }}{{ form.tags }}<br/>
     <input type="submit" value="Upload"><br />
 </form>
-
-{% for message in get_flashed_messages() %}
-    <div class="AlignCenter">{{ message }}</div>
-{% endfor %}
-
 <div id='ImageboardPageTop'>
     {# TODO: Paginate like a motherfucker #}
     Hi this is where pagination will go
