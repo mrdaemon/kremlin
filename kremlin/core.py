@@ -139,8 +139,8 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = forms.RegisterForm()
-    if request.method == 'POST' and form.validate_on_submit():
+    form = forms.RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
         dupe = dbmodel.User.query.filter_by(name=form.username.data).first()
         if dupe:
             flash("Username %s is already taken." % form.username.data)

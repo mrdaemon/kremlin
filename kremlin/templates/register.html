@@ -1,14 +1,17 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends "layout.html" %}
 {%block title %}Register{% endblock %}
 {%block content %}
 {% if not session.logged_in %}
     <form action="{{ url_for('register') }}" method=post>
+        <dl>
         {{ form.csrf }}
-        {{ form.username.label }}{{ form.username }}<br />
-        {{ form.email.label }}{{ form.email }}<br />
-        {{ form.password.label }}{{ form.password }}<br />
-        {{ form.confirm.label }}{{ form.confirm }}<br />
-        <input type="submit" value="Register"><br />
+        {{ render_field (form.username) }}
+        {{ render_field (form.email) }}
+        {{ render_field (form.password) }}
+        {{ render_field (form.confirm) }}
+        </dl>
+        <p><input type="submit" value="Register">
     </form>
 {% else %}
     <div id="ImageBoardPageTop">
