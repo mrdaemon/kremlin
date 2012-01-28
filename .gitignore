@@ -4,4 +4,6 @@
 *.log
 /*.egg-info/
 *.swp
+*.swo
+*.db
 /kremlin.cfg
